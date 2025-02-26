@@ -18,7 +18,7 @@ def get_angle(a, b, c):
 
 
 def check_deadlift_posture(landmarks, frame):
-    # Get key points for posture analysis
+
     left_shoulder = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER]
     right_shoulder = landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER]
     left_hip = landmarks[mp_pose.PoseLandmark.LEFT_HIP]
@@ -28,7 +28,7 @@ def check_deadlift_posture(landmarks, frame):
     left_ankle = landmarks[mp_pose.PoseLandmark.LEFT_ANKLE]
     right_ankle = landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE]
 
-    # Calculate the angle between the hips, knees, and shoulders
+
     # Back angle: angle between left shoulder, left hip, and left knee
     back_angle = get_angle((left_shoulder.x, left_shoulder.y), (left_hip.x, left_hip.y), (left_knee.x, left_knee.y))
 
@@ -42,9 +42,9 @@ def check_deadlift_posture(landmarks, frame):
 #                                                   Deadlift
 # ---------------------------------------------------------------------------------------------------------------------
 
-    #check posture thresholds
+    # check posture thresholds
     posture_good = True
-    if not (80 <= back_angle <= 180):  # Loosened back angle range
+    if not (80 <= back_angle <= 180):
         posture_good = False
         cv2.putText(frame, "Back rounded", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2,
                     cv2.LINE_AA)
@@ -54,7 +54,7 @@ def check_deadlift_posture(landmarks, frame):
         cv2.putText(frame, "Knees too bent or locked", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2,
                     cv2.LINE_AA)
 
-    # Optional: Further evaluate arms to check if they are extended (indicating proper bar position)
+    # check if arms are extended
     left_wrist = landmarks[mp_pose.PoseLandmark.LEFT_WRIST]
     right_wrist = landmarks[mp_pose.PoseLandmark.RIGHT_WRIST]
     if abs(left_wrist.x - left_shoulder.x) > 0.2 or abs(right_wrist.x - right_shoulder.x) > 0.2:
@@ -62,7 +62,6 @@ def check_deadlift_posture(landmarks, frame):
         cv2.putText(frame, "Arms should be extended", (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2,
                     cv2.LINE_AA)
 
-# Display angles
     cv2.putText(frame, f"Back Angle: {int(back_angle)}", (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
                 cv2.LINE_AA)
     cv2.putText(frame, f"Knee Angle Left: {int(knee_angle_left)}", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 1,
@@ -94,7 +93,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             # Check posture
             posture_good = check_deadlift_posture(landmarks, frame)
 
-            # show message
+
             if posture_good:
                 cv2.putText(frame, "Perfect Deadlift", (50, 350), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2,
                             cv2.LINE_AA)
