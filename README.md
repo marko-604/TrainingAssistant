@@ -1,9 +1,8 @@
 # Personal Training Assistant
 
-## Deadlift Posture Tracker
 
 ## Overview
-This project utilizes **OpenCV** and **MediaPipe** to track body posture in real-time and assess **deadlift form** using key pose landmarks. The system calculates **back and knee angles** to determine whether the user's posture aligns with proper deadlifting mechanics.
+This project utilizes **OpenCV** and **MediaPipe** to track body posture in real-time and assess **deadlift form** using key pose landmarks. The current system calculates **back and knee angles** to determine whether the user's posture aligns with proper deadlifting mechanics.
 
 ## Features
 - **Real-time posture analysis** using webcam input
